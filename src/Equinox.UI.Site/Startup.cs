@@ -38,16 +38,6 @@ namespace Equinox.UI.Site
                 .AddCookie(o => {
                     o.LoginPath = new PathString("/login");
                     o.AccessDeniedPath = new PathString("/home/access-denied");
-                })
-                .AddFacebook(o =>
-                {
-                    o.AppId = Configuration["Authentication:Facebook:AppId"];
-                    o.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-                })
-                .AddGoogle(googleOptions =>
-                {
-                    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
                 });
 
             services.AddMvc();

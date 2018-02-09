@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
@@ -14,6 +15,10 @@ namespace Equinox.UI.Site
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseKestrel(options =>
+                {
+                    options.Listen(IPAddress.Loopback, 8002);
+                })
                 .Build();
     }
 }
