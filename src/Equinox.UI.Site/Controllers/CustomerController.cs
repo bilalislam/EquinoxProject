@@ -29,6 +29,14 @@ namespace Equinox.UI.Site.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [Route("customer-management/list-calendar")]
+        public IActionResult Reservations()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         [Route("customer-management/customer-details/{id:guid}")]
         public IActionResult Details(Guid? id)
         {

@@ -8,6 +8,8 @@
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2018.1.117/styles/kendo.common.min.css" />
+        <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2018.1.117/styles/kendo.default.min.css" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -31,6 +33,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Customer" asp-action="Index">Customers</a></li>
+                    <li><a asp-area="" asp-controller="Customer" asp-action="Reservations">Reservations</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -41,7 +44,7 @@
         <hr />
         <footer>
             <p>Equinox Project - Version 1.2</p>
-            <p>Developed by - <a href="http://eduardopires.net.br" target="_blank">Eduardo Pires</a> - This is an open-source project <a href="https://github.com/EduardoPires/EquinoxProject" target="_blank">Equinox GitHub</a></p>
+            <p>Developed by - <a href="#" target="_blank">Eduardo Pires</a> - This is an open-source project <a href="https://github.com/bilalislam/EquinoxProject" target="_blank">Equinox GitHub</a></p>
         </footer>
     </div>
 
@@ -49,6 +52,8 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="http://origin.kendostatic.com/2018.1.117/js/kendo.all.min.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
