@@ -18,7 +18,7 @@ namespace Equinox.UI.Site.Controllers
         {
             _customerAppService = customerAppService;
         }
-
+    
         [HttpGet]
         [AllowAnonymous]
         [Route("customer-management/list-all")]

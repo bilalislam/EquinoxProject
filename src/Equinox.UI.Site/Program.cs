@@ -15,10 +15,13 @@ namespace Equinox.UI.Site
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseContentRoot($"{Directory.GetCurrentDirectory()}/src/Equinox.UI.Site")
                 .UseKestrel(options =>
                 {
-                    options.Listen(IPAddress.Loopback, 8002);
+                    options.Listen(IPAddress.Loopback, 8001);
                 })
+                .UseEnvironment("Development")
                 .Build();
+
     }
 }

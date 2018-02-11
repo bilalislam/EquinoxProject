@@ -7,6 +7,7 @@ using Equinox.Domain.Interfaces;
 using Equinox.Domain.Models;
 using MediatR;
 
+
 namespace Equinox.Domain.CommandHandlers
 {
     public class CustomerCommandHandler : CommandHandler,
