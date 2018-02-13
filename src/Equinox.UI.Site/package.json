@@ -4,6 +4,7 @@
   "description": "maintaining by bilal islam",
   "main": "index.js",
   "scripts": {
+    "start":"dotnet build",
     "test": "dotnet test ./..."
   },
   "repository": {
