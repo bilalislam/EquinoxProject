@@ -17,5 +17,7 @@ namespace Equinox.Domain.Commands
         public DateTime StartDate { get; protected set; }
 
         public DateTime EndDate { get; protected set; }
+
+        public int TableId { get; set; }
     }
 }

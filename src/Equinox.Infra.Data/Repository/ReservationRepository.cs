@@ -16,9 +16,18 @@ namespace Equinox.Infra.Data.Repository
 
         }
 
+        public IQueryable<Reservation> GetReservationByDay(DateTime day)
+        {
+            return DbSet.AsNoTracking().Where(x => x.StartDate >= day && x.StartDate <= day.AddDays(1));
+        }
+
         public IQueryable<Reservation> GetAllByRange(DateTime start, DateTime end)
         {
-            throw new NotImplementedException();
+            return DbSet.AsNoTracking().Where(x =>
+            ((x.StartDate.ToShortDateString() == start.ToShortDateString() &&
+            x.StartDate.ToShortTimeString() == start.ToShortTimeString() ||
+            (x.EndDate.ToShortDateString() == end.ToShortDateString() &&
+            x.EndDate.ToShortTimeString() == end.ToShortTimeString()))));
         }
     }
 }

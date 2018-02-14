@@ -5,7 +5,7 @@ namespace Equinox.Domain.Models
 {
     public class Reservation : Entity
     {
-        public Reservation(Guid id, Guid ownerId, string title, string description, DateTime startDate, DateTime endDate)
+        public Reservation(Guid id, Guid ownerId, string title, string description, DateTime startDate, DateTime endDate,int tableId)
         {
             Id = id;
             OwnerId = ownerId;
@@ -13,6 +13,7 @@ namespace Equinox.Domain.Models
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
+            TableId = tableId;
         }
 
         // Empty constructor for EF
@@ -27,5 +28,7 @@ namespace Equinox.Domain.Models
         public DateTime StartDate { get; private set; }
 
         public DateTime EndDate { get; private set; }
+
+        public int TableId { get; set; }
     }
 }

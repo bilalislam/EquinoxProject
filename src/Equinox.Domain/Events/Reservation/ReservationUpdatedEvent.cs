@@ -5,7 +5,7 @@ namespace Equinox.Domain.Events
 {
     public class ReservationUpdatedEvent : Event
     {
-        public ReservationUpdatedEvent(Guid id, Guid ownerId, string title, string description, DateTime startDate, DateTime endDate)
+        public ReservationUpdatedEvent(Guid id, Guid ownerId, string title, string description, DateTime startDate, DateTime endDate, int tableId)
         {
             Id = id;
             OwnerId = ownerId;
@@ -14,6 +14,7 @@ namespace Equinox.Domain.Events
             StartDate = startDate;
             EndDate = endDate;
             AggregateId = id;
+            TableId = tableId;
         }
 
         public Guid Id { get; private set; }
@@ -27,5 +28,7 @@ namespace Equinox.Domain.Events
         public DateTime StartDate { get; private set; }
 
         public DateTime EndDate { get; private set; }
+
+        public int TableId { get; set; }
     }
 }

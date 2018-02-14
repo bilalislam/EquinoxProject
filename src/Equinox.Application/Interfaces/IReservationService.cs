@@ -9,6 +9,7 @@ namespace Equinox.Application.Interfaces
     {
         void Register(ReservationViewModel customerViewModel);
         IEnumerable<ReservationViewModel> GetAll();
+        IEnumerable<ReservationViewModel> GetReservationByDay(DateTime day);
         IEnumerable<ReservationViewModel> GetAllByRange(DateTime start, DateTime end);
         ReservationViewModel GetById(Guid id);
         void Update(ReservationViewModel customerViewModel);

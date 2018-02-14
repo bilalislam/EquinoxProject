@@ -29,18 +29,22 @@ namespace Equinox.Domain.Validations
         protected void ValidateDate()
         {
             RuleFor(c => c.StartDate)
+                        .GreaterThanOrEqualTo(DateTime.Now).WithMessage("The StartDate must be greather or equal than today")
                         .NotEmpty().WithMessage("Please ensure you have entered the StartDate");
 
             RuleFor(c => c.EndDate)
+            .GreaterThanOrEqualTo(DateTime.Now).WithMessage("The EndDate must be greather or equal than today")
             .NotEmpty().WithMessage("Please ensure you have entered the EndDate")
             .GreaterThan(x => x.StartDate);
 
             RuleFor(c => c)
             .Custom((c, context) =>
             {
-                if (c.EndDate.Subtract(c.StartDate).TotalHours != 1){
-                    context.AddFailure("StartDate", "dates range diff must be hourly");
-                }
+                if ((c.EndDate.Subtract(c.StartDate).TotalHours != 1) || (c.StartDate.Minute != 0 || c.EndDate.Minute != 0))
+                    context.AddFailure("StartDate", "the dates range diff must be hourly");
+
+                if (!(c.StartDate.Hour >= 11 && c.StartDate.Hour <= 23 && c.EndDate.Hour >= 11 && c.EndDate.Hour <= 23))
+                    context.AddFailure("StartDate", "the reservation business hourse must be beetween 11:00 and 23:00");
             });
         }
     }

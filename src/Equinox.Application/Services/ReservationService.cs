@@ -40,6 +40,11 @@ namespace Equinox.Application.Services
             return _reservationRepository.GetAllByRange(start, end).ProjectTo<ReservationViewModel>();
         }
 
+        public IEnumerable<ReservationViewModel> GetReservationByDay(DateTime day)
+        {
+            return _reservationRepository.GetReservationByDay(day).ProjectTo<ReservationViewModel>();
+        }
+
         public ReservationViewModel GetById(Guid id)
         {
           return _mapper.Map<ReservationViewModel>(_reservationRepository.GetById(id));

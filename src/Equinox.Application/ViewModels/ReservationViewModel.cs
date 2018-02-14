@@ -17,7 +17,7 @@ namespace Equinox.Application.ViewModels
         [DisplayName("Title")]
         public string Title { get; set; }
 
-        
+
         [DisplayName("Description")]
         public string Description { get; set; }
 
@@ -32,5 +32,11 @@ namespace Equinox.Application.ViewModels
         [DataType(DataType.DateTime, ErrorMessage = "Datetime is invalid")]
         [DisplayName("EndDate Date")]
         public DateTime EndDate { get; set; }
+
+        [Required(ErrorMessage = "The TableNumber is Required")]
+        [MinLength(1)]
+        [MaxLength(10)]
+        [DisplayName("Table Number")]
+        public int TableId { get; set; }
     }
 }

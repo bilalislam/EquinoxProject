@@ -37,6 +37,17 @@ namespace Equinox.WebApi.Controllers
             return Response(reservationViewModel);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("reservation-management/{day}")]
+        public IActionResult Get(int day)
+        {
+            var date = DateTime.Today.AddDays(day);
+            var reservationViewModel = _reservationService.GetReservationByDay(date);
+
+            return Response(reservationViewModel);
+        }
+
         [HttpPost]
         [Authorize(Policy = "")]
         [Route("reservation-management")]

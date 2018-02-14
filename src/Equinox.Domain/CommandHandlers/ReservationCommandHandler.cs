@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using Equinox.Domain.Commands;
 using Equinox.Domain.Core.Bus;
 using Equinox.Domain.Core.Notifications;
@@ -33,6 +35,21 @@ namespace Equinox.Domain.CommandHandlers
             {
                 NotifyValidationErrors(message);
                 return;
+            }
+
+            var reservation = new Reservation(Guid.NewGuid(), message.OwnerId, message.Title, message.Description, message.StartDate, message.EndDate);
+
+            if (_reservationRepository.GetAllByRange(reservation.StartDate, reservation.EndDate).Count() > 0)
+            {
+                Bus.RaiseEvent(new DomainNotification(message.MessageType, "The reservation has already been taken at this date range."));
+                return;
+            }
+
+            _reservationRepository.Add(reservation);
+
+            if (Commit())
+            {
+                Bus.RaiseEvent(new ReservationRegisteredEvent(reservation.Id, reservation.OwnerId, reservation.Title, reservation.Description, reservation.StartDate, reservation.EndDate));
             }
         }
 

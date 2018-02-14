@@ -5,7 +5,7 @@ namespace Equinox.Domain.Commands
 {
     public class UpdateReservationCommand : ReservationCommand
     {
-        public UpdateReservationCommand(Guid id, Guid ownerId, string title, string description, DateTime startDate, DateTime endDate)
+        public UpdateReservationCommand(Guid id, Guid ownerId, string title, string description, DateTime startDate, DateTime endDate, int tableId)
         {
             Id = id;
             OwnerId = ownerId;
@@ -13,6 +13,7 @@ namespace Equinox.Domain.Commands
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
+            TableId = tableId;
         }
 
         public override bool IsValid()
