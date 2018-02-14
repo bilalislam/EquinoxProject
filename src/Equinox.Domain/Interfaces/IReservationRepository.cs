@@ -7,7 +7,7 @@ namespace Equinox.Domain.Interfaces
 {
     public interface IReservationRepository : IRepository<Reservation>
     {
-        IQueryable<Reservation> GetAllByRange(DateTime start, DateTime end);
+        IQueryable<Reservation> Check(Reservation entity);
 
         IQueryable<Reservation> GetReservationByDay(DateTime day);
     }

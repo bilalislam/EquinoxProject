@@ -1,5 +1,7 @@
-﻿using Equinox.Domain.Core.Bus;
+﻿using Equinox.Domain.Commands;
+using Equinox.Domain.Core.Bus;
 using Equinox.Domain.Core.Commands;
+using Equinox.Domain.Core.Events;
 using Equinox.Domain.Core.Notifications;
 using Equinox.Domain.Interfaces;
 using MediatR;
@@ -35,6 +37,27 @@ namespace Equinox.Domain.CommandHandlers
 
             _bus.RaiseEvent(new DomainNotification("Commit", "We had a problem during saving your data."));
             return false;
+        }
+
+        protected void Validate(Command message)
+        {
+            if (!message.IsValid())
+            {
+                NotifyValidationErrors(message);
+                return;
+            }
+        }
+
+        protected void RaiseError(Command message, string errorMessage)
+        {
+            _bus.RaiseEvent(new DomainNotification(message.MessageType, errorMessage));
+            return;
+        }
+
+        protected void RaiseEvent(Event message)
+        {
+            _bus.RaiseEvent(message);
+            return;
         }
     }
 }

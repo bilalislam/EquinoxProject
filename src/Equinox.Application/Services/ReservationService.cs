@@ -19,10 +19,10 @@ namespace Equinox.Application.Services
         private readonly IEventStoreRepository _eventStoreRepository;
         private readonly IMediatorHandler Bus;
 
-         public ReservationService(IMapper mapper,
-                                  IReservationRepository reservationRepository,
-                                  IMediatorHandler bus,
-                                  IEventStoreRepository eventStoreRepository)
+        public ReservationService(IMapper mapper,
+                                 IReservationRepository reservationRepository,
+                                 IMediatorHandler bus,
+                                 IEventStoreRepository eventStoreRepository)
         {
             _mapper = mapper;
             _reservationRepository = reservationRepository;
@@ -35,9 +35,10 @@ namespace Equinox.Application.Services
             return _reservationRepository.GetAll().ProjectTo<ReservationViewModel>();
         }
 
-        public IEnumerable<ReservationViewModel> GetAllByRange(DateTime start, DateTime end)
+        public IEnumerable<ReservationViewModel> Check(ReservationViewModel model)
         {
-            return _reservationRepository.GetAllByRange(start, end).ProjectTo<ReservationViewModel>();
+            var entity = _mapper.Map<Domain.Models.Reservation>(model);
+            return _reservationRepository.Check(entity).ProjectTo<ReservationViewModel>();
         }
 
         public IEnumerable<ReservationViewModel> GetReservationByDay(DateTime day)
@@ -47,7 +48,7 @@ namespace Equinox.Application.Services
 
         public ReservationViewModel GetById(Guid id)
         {
-          return _mapper.Map<ReservationViewModel>(_reservationRepository.GetById(id));
+            return _mapper.Map<ReservationViewModel>(_reservationRepository.GetById(id));
         }
 
         public void Register(ReservationViewModel reservationViewModel)
@@ -61,7 +62,7 @@ namespace Equinox.Application.Services
             var updateCommand = _mapper.Map<UpdateReservationCommand>(reservationViewModel);
             Bus.SendCommand(updateCommand);
         }
-        
+
         public void Remove(Guid id)
         {
             var removeCommand = new RemoveReservationCommand(id);

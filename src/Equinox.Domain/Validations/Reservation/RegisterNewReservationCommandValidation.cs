@@ -9,6 +9,7 @@ namespace Equinox.Domain.Validations
             ValidateOwnerId();
             ValidateTitle();
             ValidateDate();
+            ValidateTableId();
         }
     }
 }

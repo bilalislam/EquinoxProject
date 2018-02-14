@@ -26,6 +26,13 @@ namespace Equinox.Domain.Validations
                 .Length(6, 100).WithMessage("The Title must have between 6 and 100 characters");
         }
 
+        protected void ValidateTableId()
+        {
+            RuleFor(c => c.TableId)
+                .GreaterThanOrEqualTo(1).WithMessage("The TableId must have between 1 and 10")
+                .LessThanOrEqualTo(10).WithMessage("The TableId must have between 1 and 10");
+        }
+
         protected void ValidateDate()
         {
             RuleFor(c => c.StartDate)

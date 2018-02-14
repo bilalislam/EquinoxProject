@@ -10,6 +10,7 @@ namespace Equinox.Application.AutoMapper
         {
             CreateMap<Customer, CustomerViewModel>();
             CreateMap<Reservation, ReservationViewModel>();
+            CreateMap<ReservationViewModel, Reservation>();
         }
     }
 }

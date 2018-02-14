@@ -7,12 +7,12 @@ namespace Equinox.Application.Interfaces
 {
     public interface IReservationService : IDisposable
     {
-        void Register(ReservationViewModel customerViewModel);
+        void Register(ReservationViewModel model);
         IEnumerable<ReservationViewModel> GetAll();
         IEnumerable<ReservationViewModel> GetReservationByDay(DateTime day);
-        IEnumerable<ReservationViewModel> GetAllByRange(DateTime start, DateTime end);
+        IEnumerable<ReservationViewModel> Check(ReservationViewModel model);
         ReservationViewModel GetById(Guid id);
-        void Update(ReservationViewModel customerViewModel);
+        void Update(ReservationViewModel model);
         void Remove(Guid id);
 
     }

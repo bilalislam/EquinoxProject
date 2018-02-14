@@ -8,7 +8,7 @@ using Equinox.Domain.Events;
 using Equinox.Domain.Interfaces;
 using Equinox.Domain.Models;
 using MediatR;
-
+using Equinox.Domain.Core.Commands;
 
 namespace Equinox.Domain.CommandHandlers
 {
@@ -31,31 +31,22 @@ namespace Equinox.Domain.CommandHandlers
 
         public void Handle(RegisterNewReservationCommand message)
         {
-            if (!message.IsValid())
-            {
-                NotifyValidationErrors(message);
-                return;
-            }
-
+            Validate(message);
             var reservation = new Reservation(Guid.NewGuid(), message.OwnerId, message.Title, message.Description, message.StartDate, message.EndDate, message.TableId);
-
-            if (_reservationRepository.GetAllByRange(reservation.StartDate, reservation.EndDate).Count() > 0)
-            {
-                Bus.RaiseEvent(new DomainNotification(message.MessageType, "The reservation has already been taken at this date range."));
-                return;
-            }
-
+            Check(message, reservation);
             _reservationRepository.Add(reservation);
-
             if (Commit())
-            {
-                Bus.RaiseEvent(new ReservationRegisteredEvent(reservation.Id, reservation.OwnerId, reservation.Title, reservation.Description, reservation.StartDate, reservation.EndDate, message.TableId));
-            }
+                RaiseEvent(new ReservationRegisteredEvent(reservation.Id, reservation.OwnerId, reservation.Title, reservation.Description, reservation.StartDate, reservation.EndDate, message.TableId));
         }
 
         public void Handle(UpdateReservationCommand message)
         {
-
+            Validate(message);
+            var reservation = new Reservation(message.Id, message.OwnerId, message.Title, message.Description, message.StartDate, message.EndDate, message.TableId);
+            Check(message, reservation);
+            _reservationRepository.Update(reservation);
+            if (Commit())
+                RaiseEvent(new ReservationUpdatedEvent(reservation.Id, reservation.OwnerId, reservation.Title, reservation.Description, reservation.StartDate, reservation.EndDate, message.TableId));
         }
 
         public void Handle(RemoveReservationCommand message)
@@ -66,6 +57,17 @@ namespace Equinox.Domain.CommandHandlers
         public void Dispose()
         {
             _reservationRepository.Dispose();
+        }
+
+
+        /*
+            * müsaitlik durumu hem tarih hem de masaya göre kontrol edilmeli.
+         */
+        private void Check(Command message, Reservation reservation)
+        {
+            var result = _reservationRepository.Check(reservation);
+            if (result.Any(x => x.Id != reservation.Id))
+                RaiseError(message, "The reservation has already been taken at this date range.");
         }
     }
 }
