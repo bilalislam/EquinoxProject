@@ -32,26 +32,33 @@ namespace Equinox.Domain.CommandHandlers
         public void Handle(RegisterNewReservationCommand message)
         {
             Validate(message);
-            var reservation = new Reservation(Guid.NewGuid(), message.OwnerId, message.Title, message.Description, message.StartDate, message.EndDate, message.TableId);
+            var reservation = new Reservation(Guid.NewGuid(), message.OwnerId, message.Title, 
+                    message.Description, message.StartDate, message.EndDate, message.TableId);
             Check(message, reservation);
             _reservationRepository.Add(reservation);
             if (Commit())
-                RaiseEvent(new ReservationRegisteredEvent(reservation.Id, reservation.OwnerId, reservation.Title, reservation.Description, reservation.StartDate, reservation.EndDate, message.TableId));
+                RaiseEvent(new ReservationRegisteredEvent(reservation.Id, reservation.OwnerId, reservation.Title, 
+                reservation.Description, reservation.StartDate, reservation.EndDate, message.TableId));
         }
 
         public void Handle(UpdateReservationCommand message)
         {
             Validate(message);
-            var reservation = new Reservation(message.Id, message.OwnerId, message.Title, message.Description, message.StartDate, message.EndDate, message.TableId);
+            var reservation = new Reservation(message.Id, message.OwnerId, message.Title,
+             message.Description, message.StartDate, message.EndDate, message.TableId);
             Check(message, reservation);
             _reservationRepository.Update(reservation);
             if (Commit())
-                RaiseEvent(new ReservationUpdatedEvent(reservation.Id, reservation.OwnerId, reservation.Title, reservation.Description, reservation.StartDate, reservation.EndDate, message.TableId));
+                RaiseEvent(new ReservationUpdatedEvent(reservation.Id, reservation.OwnerId, reservation.Title,
+                 reservation.Description, reservation.StartDate, reservation.EndDate, message.TableId));
         }
 
         public void Handle(RemoveReservationCommand message)
         {
-
+            Validate(message);
+            _reservationRepository.Remove(message.Id);
+            if (Commit())
+                Bus.RaiseEvent(new ReservationRemovedEvent(message.Id));
         }
 
         public void Dispose()
