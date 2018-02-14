@@ -35,7 +35,7 @@ namespace Equinox.WebApi.Controllers
             var customerViewModel = _customerAppService.GetById(id);
 
             return Response(customerViewModel);
-        }     
+        }
 
         [HttpPost]
         [Authorize(Policy = "CanWriteCustomerData")]
@@ -52,7 +52,7 @@ namespace Equinox.WebApi.Controllers
 
             return Response(customerViewModel);
         }
-        
+
         [HttpPut]
         [Authorize(Policy = "CanWriteCustomerData")]
         [Route("customer-management")]
@@ -75,7 +75,7 @@ namespace Equinox.WebApi.Controllers
         public IActionResult Delete(Guid id)
         {
             _customerAppService.Remove(id);
-            
+
             return Response();
         }
 

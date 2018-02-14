@@ -8,9 +8,7 @@ namespace Equinox.Domain.Commands
     {
         public Guid Id { get; protected set; }
 
-        public int TaskId { get; protected set; }
-
-        public int OwnerId { get; protected set; }
+        public Guid OwnerId { get; protected set; }
 
         public string Title { get; protected set; }
 

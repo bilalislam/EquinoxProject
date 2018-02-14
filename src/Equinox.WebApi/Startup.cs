@@ -70,8 +70,8 @@ namespace Equinox.WebApi
                     Version = "v1",
                     Title = "Equinox Project",
                     Description = "Equinox API Swagger surface",
-                    Contact = new Contact { Name = "Eduardo Pires", Email = "contato@eduardopires.net.br", Url = "http://www.eduardopires.net.br" },
-                    License = new License { Name = "MIT", Url = "https://github.com/EduardoPires/EquinoxProject/blob/master/LICENSE" }
+                    Contact = new Contact { Name = "Eduardo Pires", Email = "bilal.islam815@gmail.com", Url = "" },
+                    License = new License { Name = "MIT", Url = "https://github.com/bilalislam/EquinoxProject/blob/master/LICENSE" }
                 });
             });
 

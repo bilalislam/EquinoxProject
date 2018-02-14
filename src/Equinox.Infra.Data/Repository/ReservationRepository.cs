@@ -16,7 +16,7 @@ namespace Equinox.Infra.Data.Repository
 
         }
 
-        public IEnumerable<Reservation> GetAllByRange(DateTime start, DateTime end)
+        public IQueryable<Reservation> GetAllByRange(DateTime start, DateTime end)
         {
             throw new NotImplementedException();
         }

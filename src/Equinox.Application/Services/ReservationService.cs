@@ -32,33 +32,37 @@ namespace Equinox.Application.Services
 
         public IEnumerable<ReservationViewModel> GetAll()
         {
-            throw new NotImplementedException();
+            return _reservationRepository.GetAll().ProjectTo<ReservationViewModel>();
         }
 
         public IEnumerable<ReservationViewModel> GetAllByRange(DateTime start, DateTime end)
         {
-            throw new NotImplementedException();
+            return _reservationRepository.GetAllByRange(start, end).ProjectTo<ReservationViewModel>();
         }
 
         public ReservationViewModel GetById(Guid id)
         {
-            throw new NotImplementedException();
+          return _mapper.Map<ReservationViewModel>(_reservationRepository.GetById(id));
         }
 
-        public void Register(ReservationViewModel ReservationViewModel)
+        public void Register(ReservationViewModel reservationViewModel)
         {
-            throw new NotImplementedException();
+            var registerCommand = _mapper.Map<RegisterNewReservationCommand>(reservationViewModel);
+            Bus.SendCommand(registerCommand);
         }
 
+        public void Update(ReservationViewModel reservationViewModel)
+        {
+            var updateCommand = _mapper.Map<UpdateReservationCommand>(reservationViewModel);
+            Bus.SendCommand(updateCommand);
+        }
+        
         public void Remove(Guid id)
         {
-            throw new NotImplementedException();
+            var removeCommand = new RemoveReservationCommand(id);
+            Bus.SendCommand(removeCommand);
         }
 
-        public void Update(ReservationViewModel ReservationViewModel)
-        {
-            throw new NotImplementedException();
-        }
         public void Dispose()
         {
             GC.SuppressFinalize(this);

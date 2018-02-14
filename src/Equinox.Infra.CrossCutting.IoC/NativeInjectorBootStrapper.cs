@@ -46,14 +46,23 @@ namespace Equinox.Infra.CrossCutting.IoC
 
             // Domain - Events
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+
             services.AddScoped<INotificationHandler<CustomerRegisteredEvent>, CustomerEventHandler>();
             services.AddScoped<INotificationHandler<CustomerUpdatedEvent>, CustomerEventHandler>();
             services.AddScoped<INotificationHandler<CustomerRemovedEvent>, CustomerEventHandler>();
+
+            services.AddScoped<INotificationHandler<ReservationRegisteredEvent>, ReservationEventHandler>();
+            services.AddScoped<INotificationHandler<ReservationUpdatedEvent>, ReservationEventHandler>();
+            services.AddScoped<INotificationHandler<ReservationRemovedEvent>, ReservationEventHandler>();
 
             // Domain - Commands
             services.AddScoped<INotificationHandler<RegisterNewCustomerCommand>, CustomerCommandHandler>();
             services.AddScoped<INotificationHandler<UpdateCustomerCommand>, CustomerCommandHandler>();
             services.AddScoped<INotificationHandler<RemoveCustomerCommand>, CustomerCommandHandler>();
+
+            services.AddScoped<INotificationHandler<RegisterNewReservationCommand>, ReservationCommandHandler>();
+            services.AddScoped<INotificationHandler<UpdateReservationCommand>, ReservationCommandHandler>();
+            services.AddScoped<INotificationHandler<RemoveReservationCommand>, ReservationCommandHandler>();
 
             // Infra - Data
             services.AddScoped<ICustomerRepository, CustomerRepository>();

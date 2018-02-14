@@ -9,6 +9,7 @@ namespace Equinox.Infra.Data.Context
     public class EquinoxContext : DbContext
     {
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

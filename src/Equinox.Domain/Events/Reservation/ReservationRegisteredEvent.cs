@@ -1,11 +1,11 @@
 using System;
-using Equinox.Domain.Core.Models;
+using Equinox.Domain.Core.Events;
 
-namespace Equinox.Domain.Models
+namespace Equinox.Domain.Events
 {
-    public class Reservation : Entity
+    public class ReservationRegisteredEvent : Event
     {
-        public Reservation(Guid id, Guid ownerId, string title, string description, DateTime startDate, DateTime endDate)
+        public ReservationRegisteredEvent(Guid id, Guid ownerId, string title, string description, DateTime startDate, DateTime endDate)
         {
             Id = id;
             OwnerId = ownerId;
@@ -13,10 +13,10 @@ namespace Equinox.Domain.Models
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
+            AggregateId = id;
         }
 
-        // Empty constructor for EF
-        protected Reservation() { }
+        public Guid Id { get; private set; }
 
         public Guid OwnerId { get; private set; }
 

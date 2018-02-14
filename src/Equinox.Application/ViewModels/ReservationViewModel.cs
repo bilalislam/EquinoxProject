@@ -9,9 +9,7 @@ namespace Equinox.Application.ViewModels
         [Key]
         public Guid Id { get; set; }
 
-        public int TaskId { get; set; }
-
-        public int OwnerId { get; set; }
+        public Guid OwnerId { get; set; }
 
         [Required(ErrorMessage = "The Title is Required")]
         [MinLength(6)]
