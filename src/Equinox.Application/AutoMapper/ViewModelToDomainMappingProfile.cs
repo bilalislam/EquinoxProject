@@ -15,10 +15,10 @@ namespace Equinox.Application.AutoMapper
                 .ConstructUsing(c => new UpdateCustomerCommand(c.Id, c.Name, c.Email, c.BirthDate));
 
             CreateMap<ReservationViewModel, RegisterNewReservationCommand>()
-            .ConstructUsing(c => new RegisterNewReservationCommand(c.OwnerId, c.Title, c.Description, c.StartDate, c.EndDate));
+            .ConstructUsing(c => new RegisterNewReservationCommand(c.OwnerId, c.Title, c.Description, c.StartDate, c.EndDate, c.TableId));
 
             CreateMap<ReservationViewModel, UpdateReservationCommand>()
-                .ConstructUsing(c => new UpdateReservationCommand(c.Id, c.OwnerId, c.Title, c.Description, c.StartDate, c.EndDate));
+                .ConstructUsing(c => new UpdateReservationCommand(c.Id, c.OwnerId, c.Title, c.Description, c.StartDate, c.EndDate, c.TableId));
         }
     }
 }

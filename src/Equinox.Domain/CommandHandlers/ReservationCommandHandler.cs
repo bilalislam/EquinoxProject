@@ -37,7 +37,7 @@ namespace Equinox.Domain.CommandHandlers
                 return;
             }
 
-            var reservation = new Reservation(Guid.NewGuid(), message.OwnerId, message.Title, message.Description, message.StartDate, message.EndDate);
+            var reservation = new Reservation(Guid.NewGuid(), message.OwnerId, message.Title, message.Description, message.StartDate, message.EndDate, message.TableId);
 
             if (_reservationRepository.GetAllByRange(reservation.StartDate, reservation.EndDate).Count() > 0)
             {
@@ -49,7 +49,7 @@ namespace Equinox.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new ReservationRegisteredEvent(reservation.Id, reservation.OwnerId, reservation.Title, reservation.Description, reservation.StartDate, reservation.EndDate));
+                Bus.RaiseEvent(new ReservationRegisteredEvent(reservation.Id, reservation.OwnerId, reservation.Title, reservation.Description, reservation.StartDate, reservation.EndDate, message.TableId));
             }
         }
 
