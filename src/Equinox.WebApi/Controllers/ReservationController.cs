@@ -29,6 +29,22 @@ namespace Equinox.WebApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [Route("reservation-management/get-all-days")]
+        public IActionResult GetAllDays(int day)
+        {
+            return Response(_reservationService.GetAllByDay(DateTime.Today.AddDays(day)));
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("reservation-management/get-available-days")]
+        public IActionResult GetAvailableDays(int day)
+        {
+            return Response(_reservationService.GetAvailableDays(DateTime.Today.AddDays(day)));
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         [Route("reservation-management/{id:guid}")]
         public IActionResult Get(Guid id)
         {
