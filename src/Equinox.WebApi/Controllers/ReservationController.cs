@@ -5,6 +5,7 @@ using Equinox.Domain.Core.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Equinox.WebApi.Controllers
 {
@@ -41,6 +42,14 @@ namespace Equinox.WebApi.Controllers
         public IActionResult GetAvailableDays(int day)
         {
             return Response(_reservationService.GetAvailableDays(DateTime.Today.AddDays(day)));
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("reservation-management/find-table")]
+        public IActionResult FindTable(int day, int partyOfSize, string time)
+        {
+            return Response(_reservationService.FindTable(day, partyOfSize, time));
         }
 
         [HttpGet]

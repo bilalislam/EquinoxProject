@@ -44,7 +44,8 @@ namespace Equinox.Application.Services
         {
             List<ScheduleViewModel> reservationByDayResult = GetReservationByDayAsSchedule(day).ToList();
             List<ScheduleViewModel> allTimesByDay = _scheduleService.GetAll().ToList();
-            foreach (var item in allTimesByDay){
+            foreach (var item in allTimesByDay)
+            {
                 if (reservationByDayResult.Any(x => x.Time == item.Time.Substring(0, 5) && x.TableId == item.TableId))
                     item.Status = false;
             }
@@ -61,6 +62,16 @@ namespace Equinox.Application.Services
             return result;
         }
 
+        public IEnumerable<ScheduleViewModel> FindTable(int day, decimal partyOfSize, string time)
+        {
+            var tables = GetAvailableDays(DateTime.Today.AddDays(day)).Where(x => x.Time == time);
+            decimal totalTableCount = Math.Round(partyOfSize / 2, MidpointRounding.AwayFromZero);
+            var result = tables.Take((int)totalTableCount);
+            if (result.Count() == totalTableCount)
+                return result;
+            else
+                return new List<ScheduleViewModel>();
+        }
         public IEnumerable<ReservationViewModel> Check(ReservationViewModel model)
         {
             var entity = _mapper.Map<Domain.Models.Reservation>(model);
