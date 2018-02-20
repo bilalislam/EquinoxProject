@@ -6,3 +6,5 @@ services:
     build:
       context: ./src/Equinox.WebApi
       dockerfile: Dockerfile
+    ports:
+      - "8003:8003"
