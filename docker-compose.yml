@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  webapi:
+    image: ninjafx/eq-webapi:latest
+    build:
+      context: ./src/Equinox.WebApi
+      dockerfile: Dockerfile

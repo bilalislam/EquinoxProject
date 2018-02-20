@@ -17,8 +17,9 @@ namespace Equinox.WebApi
                 .UseStartup<Startup>()
                 .UseKestrel(options =>
                 {
-                    options.Listen(IPAddress.Loopback, 8001 );
+                    options.Listen(IPAddress.Loopback, 8002);
                 })
+                .UseEnvironment("Development")
                 .Build();
     }
 }
