@@ -6,7 +6,7 @@ VERSION=1.0
 
 
 # run build script for dockerfile
-sh ../../cli-mac/build-bits.sh
+sh ../build-bits.sh
 
 # Create and Copy latest built dll file into docker folder
 mkdir app
