@@ -18,7 +18,6 @@ namespace Equinox.Domain.CommandHandlers
         INotificationHandler<RemoveReservationCommand>
     {
         private readonly IReservationRepository _reservationRepository;
-        private readonly IMediatorHandler Bus;
 
         public ReservationCommandHandler(IReservationRepository reservationRepository,
                                       IUnitOfWork uow,
@@ -26,18 +25,17 @@ namespace Equinox.Domain.CommandHandlers
                                       INotificationHandler<DomainNotification> notifications) : base(uow, bus, notifications)
         {
             _reservationRepository = reservationRepository;
-            Bus = bus;
         }
 
         public void Handle(RegisterNewReservationCommand message)
         {
             Validate(message);
-            var reservation = new Reservation(Guid.NewGuid(), message.OwnerId, message.Title, 
+            var reservation = new Reservation(Guid.NewGuid(), message.OwnerId, message.Title,
                     message.Description, message.StartDate, message.EndDate, message.TableId);
             Check(message, reservation);
             _reservationRepository.Add(reservation);
             if (Commit())
-                RaiseEvent(new ReservationRegisteredEvent(reservation.Id, reservation.OwnerId, reservation.Title, 
+                RaiseEvent(new ReservationRegisteredEvent(reservation.Id, reservation.OwnerId, reservation.Title,
                 reservation.Description, reservation.StartDate, reservation.EndDate, message.TableId));
         }
 
@@ -58,7 +56,7 @@ namespace Equinox.Domain.CommandHandlers
             Validate(message);
             _reservationRepository.Remove(message.Id);
             if (Commit())
-                Bus.RaiseEvent(new ReservationRemovedEvent(message.Id));
+                RaiseEvent(new ReservationRemovedEvent(message.Id));
         }
 
         public void Dispose()

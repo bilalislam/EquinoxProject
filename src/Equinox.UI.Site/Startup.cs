@@ -13,6 +13,7 @@ using Equinox.Infra.CrossCutting.IoC;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.IO;
 
 namespace Equinox.UI.Site
 {

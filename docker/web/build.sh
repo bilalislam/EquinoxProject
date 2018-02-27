@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Define image name and version
-IMAGE_NAME=ninjafx/eq-webapi
+IMAGE_NAME=ninjafx/eq-web
 VERSION=1.0
 
 
 # run build script for dockerfile
 projectList=(
-    "../../src/Equinox.WebApi"
+    "../../src/Equinox.UI.Site"
 )
 
 for project in "${projectList[@]}"
@@ -17,21 +17,19 @@ do
     pushd $(pwd)/$project
     rm -rf obj/Docker/publish
     echo -e "\e[33m\tBuilding and publishing projects"
-    dotnet restore
-    dotnet build
     dotnet publish -o obj/Docker/publish -c Release
     popd
 done
 
 # remove old docker images & containers
-docker rmi $(docker images --filter=reference="ninjafx/eq-webapi" -q) -f
-docker rm $(docker ps --filter=ancestor="ninjafx/eq-webapi" -q) -f
-docker rm $(docker ps --filter=ancestor="dockercompose_webapi_1" -q) -f
+docker rmi $(docker images --filter=reference="ninjafx/eq-web" -q) -f
+docker rm $(docker ps --filter=ancestor="ninjafx/eq-web" -q) -f
+docker rm $(docker ps --filter=ancestor="dockercompose_web_1" -q) -f
 
 # Create and Copy latest built dll file into docker folder
 mkdir app
-mv ../../src/Equinox.WebApi/obj/Docker/publish app/
-rm -rf ../../src/Equinox.WebApi/obj/Docker
+mv ../../src/Equinox.UI.Site/obj/Docker/publish app/
+rm -rf ../../src/Equinox.UI.Site/obj/Docker
 
 # Build docker image
 docker build -f Dockerfile -t "$IMAGE_NAME:$VERSION" .

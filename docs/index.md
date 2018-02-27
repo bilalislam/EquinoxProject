@@ -58,7 +58,7 @@ This is a sample application using some beta/pre-release versions (including ASP
 - Maybe you don't need a lot of implementations that is included, try avoid the **over engineering**
 
 ## About the next versions
-Watch our [RoadMap](https://github.com/EduardoPires/EquinoxProject/wiki/RoadMap) to know the new changes
+Watch our [RoadMap](https://github.com/bilalislam/EquinoxProject/wiki/RoadMap) to know the new changes
 
 Pull-Requests are welcome!
 
@@ -71,4 +71,4 @@ Equinox is also a series of publications (subtitle: "The Review of Scientific Il
 See the project running on <a href="http://equinoxproject.azurewebsites.net" target="_blank">Azure</a>
 
 ## About:
-The Equinox Project was developed by [Eduardo Pires](http://eduardopires.net.br) under the [MIT license](LICENSE).
+The Equinox Project was developed by [Bilal İslam] under the [MIT license](LICENSE).
