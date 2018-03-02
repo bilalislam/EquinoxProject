@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             //"program": "${workspaceFolder}/src/Equinox.UI.Site/bin/Debug/netcoreapp2.0/Equinox.UI.Site.dll",
-            "program": "${workspaceFolder}/src/Equinox.WebApi/bin/Release/netcoreapp2.0/Equinox.WebApi.dll",
+            "program": "${workspaceFolder}/src/Equinox.WebApi/bin/Debug/netcoreapp2.0/Equinox.WebApi.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
