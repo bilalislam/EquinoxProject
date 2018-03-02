@@ -30,10 +30,10 @@ namespace Equinox.Domain.CommandHandlers
         public void Handle(RegisterNewProductCommand message)
         {
             Validate(message);
-            var product = new Product(Guid.NewGuid(), message.Name, message.LastUpdateDate);
+            var product = new Product(Guid.NewGuid(), message.Name);
             _productRepository.Add(product);
             if (Commit())
-                RaiseEvent(new ProductRegisteredEvent(product.Id, product.Name, product.LastUpdateDate));
+                RaiseEvent(new ProductRegisteredEvent(product.Id, product.Name));
         }
 
         public void Handle(UpdateProductCommand message)
@@ -42,7 +42,7 @@ namespace Equinox.Domain.CommandHandlers
             var product = new Product(message.Id, message.Name, message.LastUpdateDate);
             _productRepository.Update(product);
             if (Commit())
-                RaiseEvent(new ProductUpdatedEvent(product.Id, product.Name, product.LastUpdateDate));
+                RaiseEvent(new ProductUpdatedEvent(product.Id, product.Name, product.LastUpdateDate.Value));
         }
 
         public void Handle(RemoveProductCommand message)

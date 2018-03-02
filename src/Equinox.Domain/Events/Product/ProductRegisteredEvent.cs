@@ -5,16 +5,14 @@ namespace Equinox.Domain.Events
 {
     public class ProductRegisteredEvent : Event
     {
-        public ProductRegisteredEvent(Guid id, string name, DateTime lastUpdateDate)
+        public ProductRegisteredEvent(Guid id, string name)
         {
             Id = id;
-            Name = name;
-            LastUpdateDate = lastUpdateDate;
+            Name = name;            
             AggregateId = id;
         }
 
         public Guid Id { get; private set; }
         public string Name { get; private set; }
-        public DateTime LastUpdateDate { get; private set; }
     }
 }

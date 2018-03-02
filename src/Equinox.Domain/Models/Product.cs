@@ -5,7 +5,7 @@ namespace Equinox.Domain.Models
 {
     public class Product : Entity
     {
-        public Product(Guid id, string name, DateTime lastUpdateDate)
+        public Product(Guid id, string name, DateTime? lastUpdateDate = null)
         {
             Id = id;
             Name = name;
@@ -16,6 +16,6 @@ namespace Equinox.Domain.Models
         protected Product() { }
 
         public string Name { get; private set; }
-        public DateTime LastUpdateDate { get; set; }
+        public DateTime? LastUpdateDate { get; set; }
     }
 }

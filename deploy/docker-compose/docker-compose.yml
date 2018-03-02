@@ -17,6 +17,7 @@ services:
       - webnet
     depends_on:
       - db
+      - elasticsearch
 
   web:
     image: ninjafx/eq-web:latest
@@ -34,6 +35,7 @@ services:
       - webnet
     depends_on:
       - db
+      - elasticsearchs
 
   db:
     image: ninjafx/eq-database:latest
@@ -52,6 +54,30 @@ services:
       - "1433:1433"
     networks:
       - webnet
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.2
+    container_name: elasticsearch
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - webnet
+      
+volumes:
+  esdata1:
+    driver: local
+  esdata2:
+    driver: local
 
 networks:
   webnet:

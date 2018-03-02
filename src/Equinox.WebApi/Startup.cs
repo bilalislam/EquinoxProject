@@ -52,16 +52,9 @@ namespace Equinox.WebApi
             services.AddWebApi(options =>
             {
                 options.OutputFormatters.Remove(new XmlDataContractSerializerOutputFormatter());
-                options.UseCentralRoutePrefix(new RouteAttribute("api/v{version}"));
             });
 
             services.AddAutoMapper();
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new ClaimRequirement("Customers", "Write")));
-                options.AddPolicy("CanRemoveCustomerData", policy => policy.Requirements.Add(new ClaimRequirement("Customers", "Remove")));
-            });
 
             services.AddSwaggerGen(s =>
             {
@@ -69,7 +62,7 @@ namespace Equinox.WebApi
                 {
                     Version = "v1",
                     Title = "Equinox Project",
-                    Description = "Full IT Infrastructure especially for e-commerce companies",
+                    Description = "Product Search v1.0",
                     Contact = new Contact { Name = "Bilal İslam", Email = "bilal.islam815@gmail.com", Url = "" },
                     License = new License { Name = "MIT", Url = "https://github.com/bilalislam/EquinoxProject/blob/master/LICENSE" }
                 });

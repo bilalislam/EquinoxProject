@@ -10,10 +10,10 @@ namespace Equinox.Application.AutoMapper
         {
 
             CreateMap<ProductViewModel, RegisterNewProductCommand>()
-            .ConstructUsing(c => new RegisterNewProductCommand(c.Name, c.LastUpdateDate));
+                .ConstructUsing(c => new RegisterNewProductCommand(c.Name));
 
             CreateMap<ProductViewModel, UpdateProductCommand>()
-                .ConstructUsing(c => new UpdateProductCommand(c.Id, c.Name, c.LastUpdateDate));
+                .ConstructUsing(c => new UpdateProductCommand(c.Id, c.Name, c.LastUpdateDate.Value));
         }
     }
 }

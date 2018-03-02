@@ -56,7 +56,6 @@ namespace Equinox.Infra.CrossCutting.IoC
             services.AddScoped<INotificationHandler<RemoveProductCommand>, ProductCommandHandler>();
 
             // Infra - Data
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<EquinoxContext>();

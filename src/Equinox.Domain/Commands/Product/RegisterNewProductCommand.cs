@@ -5,10 +5,9 @@ namespace Equinox.Domain.Commands
 {
     public class RegisterNewProductCommand : ProductCommand
     {
-        public RegisterNewProductCommand(string name, DateTime lastUpdateDate)
+        public RegisterNewProductCommand(string name)
         {
             Name = name;
-            LastUpdateDate = lastUpdateDate;
         }
 
         public override bool IsValid()

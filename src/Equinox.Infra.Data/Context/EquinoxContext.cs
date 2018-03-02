@@ -8,16 +8,7 @@ namespace Equinox.Infra.Data.Context
 {
     public class EquinoxContext : DbContext
     {
-
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Product> Product { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new CustomerMap());
-                        
-            base.OnModelCreating(modelBuilder);
-        }
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -7,6 +7,34 @@ Also you can run the Equinox Project in Visual Studio Code (Windows, Linux or Ma
 
 To know more about how to setup your enviroment visit the [Microsoft .NET Download Guide](https://www.microsoft.com/net/download)
 
+## How to setup via docker compose:
+
+```sh
+$ cd /deploy/docker-compose
+$ docker-compose pull
+$ docker-compose build
+$ docker-compose up
+```
+
+And open links below as ;
+- Api -> localhost:8003/swagger
+- connect to DB -> localhost:1433 | user:sa | password:testuser123!
+
+## How to setup via docker swarm:
+
+```sh
+$ cd /deploy/docker-swarm
+$ sh setup.sh
+```
+And open links below as ;
+- Api -> localhost:8003/swagger
+- connect to DB -> localhost:1433 | user:sa | password:testuser123!
+- visualizer -> localhost:8080
+- portainer (container dashboad UI) -> localhost:9000
+    - choose an user and password when entrance to portainer registeration page
+
+Note:
+
 ## Technologies implemented:
 
 - ASP.NET Core 2.0 (with .NET Core)

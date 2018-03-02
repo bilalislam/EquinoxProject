@@ -15,9 +15,6 @@ namespace Equinox.Application.ViewModels
         [DisplayName("Name")]
         public string Name { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
-        [DataType(DataType.DateTime, ErrorMessage = "Datetime is invalid")]
-        [DisplayName("Last Update Date")]
-        public DateTime LastUpdateDate { get; set; }
+        public DateTime? LastUpdateDate { get; set; }
     }
 }

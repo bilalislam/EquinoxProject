@@ -4,7 +4,6 @@
 export STATUS=1
 i=0
 
-echo "bilal islam"
 echo docker.for.mac.localhost
 
 while [[ $STATUS -ne 0 ]] && [[ $i -lt 30 ]]; do

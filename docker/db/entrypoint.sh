@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo "bilal islam"
 # Start SQL Server
 /opt/mssql/bin/sqlservr &
 
