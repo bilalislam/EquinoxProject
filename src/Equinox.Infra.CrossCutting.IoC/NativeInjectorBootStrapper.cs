@@ -41,34 +41,23 @@ namespace Equinox.Infra.CrossCutting.IoC
             // Application
             services.AddSingleton(Mapper.Configuration);
             services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
-            services.AddScoped<ICustomerAppService, CustomerAppService>();
-            services.AddScoped<IReservationService, ReservationService>();
-            services.AddScoped<IScheduleService, ScheduleService>();
+            services.AddScoped<IProductService, ProductService>();
 
             // Domain - Events
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
-
-            services.AddScoped<INotificationHandler<CustomerRegisteredEvent>, CustomerEventHandler>();
-            services.AddScoped<INotificationHandler<CustomerUpdatedEvent>, CustomerEventHandler>();
-            services.AddScoped<INotificationHandler<CustomerRemovedEvent>, CustomerEventHandler>();
-
-            services.AddScoped<INotificationHandler<ReservationRegisteredEvent>, ReservationEventHandler>();
-            services.AddScoped<INotificationHandler<ReservationUpdatedEvent>, ReservationEventHandler>();
-            services.AddScoped<INotificationHandler<ReservationRemovedEvent>, ReservationEventHandler>();
+            
+            services.AddScoped<INotificationHandler<ProductRegisteredEvent>, ProductEventHandler>();
+            services.AddScoped<INotificationHandler<ProductUpdatedEvent>, ProductEventHandler>();
+            services.AddScoped<INotificationHandler<ProductRemovedEvent>, ProductEventHandler>();
 
             // Domain - Commands
-            services.AddScoped<INotificationHandler<RegisterNewCustomerCommand>, CustomerCommandHandler>();
-            services.AddScoped<INotificationHandler<UpdateCustomerCommand>, CustomerCommandHandler>();
-            services.AddScoped<INotificationHandler<RemoveCustomerCommand>, CustomerCommandHandler>();
-
-            services.AddScoped<INotificationHandler<RegisterNewReservationCommand>, ReservationCommandHandler>();
-            services.AddScoped<INotificationHandler<UpdateReservationCommand>, ReservationCommandHandler>();
-            services.AddScoped<INotificationHandler<RemoveReservationCommand>, ReservationCommandHandler>();
+            services.AddScoped<INotificationHandler<RegisterNewProductCommand>, ProductCommandHandler>();
+            services.AddScoped<INotificationHandler<UpdateProductCommand>, ProductCommandHandler>();
+            services.AddScoped<INotificationHandler<RemoveProductCommand>, ProductCommandHandler>();
 
             // Infra - Data
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<IReservationRepository, ReservationRepository>();
-            services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<EquinoxContext>();
 
@@ -76,10 +65,6 @@ namespace Equinox.Infra.CrossCutting.IoC
             services.AddScoped<IEventStoreRepository, EventStoreSQLRepository>();
             services.AddScoped<IEventStore, SqlEventStore>();
             services.AddScoped<EventStoreSQLContext>();
-
-            // Infra - Identity Services
-            services.AddTransient<IEmailSender, AuthEmailMessageSender>();
-            services.AddTransient<ISmsSender, AuthSMSMessageSender>();
 
             // Infra - Identity
             services.AddScoped<IUser, AspNetUser>();
