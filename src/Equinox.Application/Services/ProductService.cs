@@ -9,6 +9,7 @@ using Equinox.Domain.Commands;
 using Equinox.Domain.Core.Bus;
 using Equinox.Domain.Interfaces;
 using Equinox.Infra.Data.Repository.EventSourcing;
+using Nest;
 
 namespace Equinox.Application.Services
 {
@@ -19,15 +20,18 @@ namespace Equinox.Application.Services
         private readonly IEventStoreRepository _eventStoreRepository;
         private readonly IMediatorHandler Bus;
 
+        private readonly ElasticClient _elasticClient;
         public ProductService(IMapper mapper,
                                  IProductRepository productRepository,
                                  IMediatorHandler bus,
-                                 IEventStoreRepository eventStoreRepository)
+                                 IEventStoreRepository eventStoreRepository,
+                                 ElasticClient elasticClient)
         {
             _mapper = mapper;
-            _productRepository = productRepository;;
+            _productRepository = productRepository;
             Bus = bus;
             _eventStoreRepository = eventStoreRepository;
+            _elasticClient = elasticClient;
         }
 
         public IEnumerable<ProductViewModel> GetAll()

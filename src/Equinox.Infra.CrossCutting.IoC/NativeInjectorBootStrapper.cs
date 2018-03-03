@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Equinox.Application.Interfaces;
 using Equinox.Application.Services;
 using Equinox.Domain.CommandHandlers;
@@ -22,6 +23,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Nest;
 
 namespace Equinox.Infra.CrossCutting.IoC
 {
@@ -42,10 +44,11 @@ namespace Equinox.Infra.CrossCutting.IoC
             services.AddSingleton(Mapper.Configuration);
             services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
             services.AddScoped<IProductService, ProductService>();
+            services.AddSingleton<ElasticClient>(x => new ElasticClient(new ConnectionSettings(new Uri("http://localhost:9200"))));
 
             // Domain - Events
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
-            
+
             services.AddScoped<INotificationHandler<ProductRegisteredEvent>, ProductEventHandler>();
             services.AddScoped<INotificationHandler<ProductUpdatedEvent>, ProductEventHandler>();
             services.AddScoped<INotificationHandler<ProductRemovedEvent>, ProductEventHandler>();
