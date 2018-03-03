@@ -17,12 +17,16 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Identity;
+using Serilog.Events;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
+using System;
 
 namespace Equinox.WebApi
 {
-  public class Startup
+    public class Startup
     {
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration  Configuration { get; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -38,6 +42,18 @@ namespace Equinox.WebApi
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .MinimumLevel.Debug()
+                 .WriteTo.Elasticsearch().WriteTo.Elasticsearch(
+                     new ElasticsearchSinkOptions(
+                         new Uri(Configuration.GetValue<string>("ElasticsearchUrl")))
+                     {
+                         MinimumLogEventLevel = LogEventLevel.Verbose,
+                         AutoRegisterTemplate = true
+                     })
+                .CreateLogger();
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -55,6 +71,8 @@ namespace Equinox.WebApi
             });
 
             services.AddAutoMapper();
+            services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+
 
             services.AddSwaggerGen(s =>
             {
@@ -81,8 +99,7 @@ namespace Equinox.WebApi
                               ILoggerFactory loggerFactory,
                               IHttpContextAccessor accessor)
         {
-            loggerFactory.AddConsole();
-
+    
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

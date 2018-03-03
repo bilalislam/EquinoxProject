@@ -16,6 +16,11 @@ $ docker-compose build
 $ docker-compose up
 ```
 
+For stop all containers
+```sh
+$ docker-compose down
+```
+
 And open links below as ;
 - Api -> localhost:8003/swagger
 - connect to DB -> localhost:1433 | user:sa | password:testuser123!
