@@ -10,6 +10,7 @@ using Equinox.Domain.Core.Notifications;
 using Equinox.Domain.EventHandlers;
 using Equinox.Domain.Events;
 using Equinox.Domain.Interfaces;
+using Equinox.Domain.Models;
 using Equinox.Infra.CrossCutting.Bus;
 using Equinox.Infra.CrossCutting.Identity.Authorization;
 using Equinox.Infra.CrossCutting.Identity.Models;
@@ -44,7 +45,9 @@ namespace Equinox.Infra.CrossCutting.IoC
             services.AddSingleton(Mapper.Configuration);
             services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
             services.AddScoped<IProductService, ProductService>();
-            services.AddSingleton<ElasticClient>(x => new ElasticClient(new ConnectionSettings(new Uri("http://localhost:9200"))));
+            services.AddSingleton<ElasticClient>(x =>
+                new ElasticClient(new ConnectionSettings(new Uri("http://localhost:9200"))
+                                        .DefaultIndex(SearchHelper.PRODUCT_INDEX)));
 
             // Domain - Events
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();

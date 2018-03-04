@@ -7,7 +7,9 @@ using Equinox.Application.Interfaces;
 using Equinox.Application.ViewModels;
 using Equinox.Domain.Commands;
 using Equinox.Domain.Core.Bus;
+using Equinox.Domain.Events;
 using Equinox.Domain.Interfaces;
+using Equinox.Domain.Models;
 using Equinox.Infra.Data.Repository.EventSourcing;
 using Nest;
 
@@ -18,7 +20,7 @@ namespace Equinox.Application.Services
         private readonly IMapper _mapper;
         private readonly IProductRepository _productRepository;
         private readonly IEventStoreRepository _eventStoreRepository;
-        private readonly IMediatorHandler Bus;
+        private readonly IMediatorHandler _bus;
 
         private readonly ElasticClient _elasticClient;
         public ProductService(IMapper mapper,
@@ -29,14 +31,20 @@ namespace Equinox.Application.Services
         {
             _mapper = mapper;
             _productRepository = productRepository;
-            Bus = bus;
+            _bus = bus;
             _eventStoreRepository = eventStoreRepository;
             _elasticClient = elasticClient;
         }
 
-        public IEnumerable<ProductViewModel> GetAll()
+        public IEnumerable<ProductViewModel> Search(string searchKey, int page)
         {
-            return _productRepository.GetAll().ProjectTo<ProductViewModel>();
+            var result = _elasticClient.Search<Product>(x => x
+                                .Query(q => q.QueryString(m => m.Query($"{searchKey}*")
+                                .Fields(f => f.Field(fl => fl.Name))))
+                                .From(page - 1)
+                                .Size(10));
+
+            return _mapper.Map<IEnumerable<ProductViewModel>>(result.Documents);
         }
 
 
@@ -48,19 +56,19 @@ namespace Equinox.Application.Services
         public void Register(ProductViewModel productViewModel)
         {
             var registerCommand = _mapper.Map<RegisterNewProductCommand>(productViewModel);
-            Bus.SendCommand(registerCommand);
+            _bus.SendCommand(registerCommand);
         }
 
         public void Update(ProductViewModel productViewModel)
         {
             var updateCommand = _mapper.Map<UpdateProductCommand>(productViewModel);
-            Bus.SendCommand(updateCommand);
+            _bus.SendCommand(updateCommand);
         }
 
         public void Remove(Guid id)
         {
             var removeCommand = new RemoveProductCommand(id);
-            Bus.SendCommand(removeCommand);
+            _bus.SendCommand(removeCommand);
         }
 
         public void Dispose()

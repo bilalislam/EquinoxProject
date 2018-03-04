@@ -18,9 +18,11 @@ public static class SearchHelper
             elasticClient.CreateIndex(PRODUCT_INDEX, i => i
                 .InitializeUsing(indexConfig)
                 .Mappings(m => m.Map<Product>(ms => ms
-                .Properties(p => p.Text(t => t.Name(n => n.Name)
-                .Analyzer("whitespace")))
-                .AutoMap())).Aliases(x => x.Alias("alias-product")));
+                    .Properties(p => p.Text(t => t.Name(n => n.Name)
+                        .SearchAnalyzer("standard")
+                        .Analyzer("whitespace")))
+                .AutoMap()))
+                .Aliases(x => x.Alias("alias-product")));
         }
     }
 }

@@ -24,10 +24,10 @@ namespace Equinox.WebApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("product-management")]
-        public IActionResult Get()
+        [Route("product-management/searchKey/page")]
+        public IActionResult Get(string searchKey, int page)
         {
-            return Response(_productService.GetAll());
+            return Response(_productService.Search(searchKey, page));
         }
 
         [HttpGet]
