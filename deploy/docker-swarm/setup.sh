@@ -3,23 +3,23 @@
 # Swarm mode using Docker Machine
 
 managers=1
-workers=3
+workers=2
 
 # create manager machines
 echo "======> Creating $managers manager machines ...";
-for node in $(seq 1 $managers);
+for node in $(seq 1 1);
 do
 	echo "======> Creating swarm-$node machine ...";
-	docker-machine create -d virtualbox swarm-$node;
+	docker-machine create -d virtualbox --virtualbox-memory "2048" swarm-$node;
 	docker-machine start swarm-$node;
 done
 
 # create worker machines
-echo "======> Creating $workers worker machines ...";
-for node in $(seq 1 $workers);
+#echo "======> Creating $workers worker machines ...";
+for node in $(seq 2 $managers);
 do
 	echo "======> Creating swarm-$node machine ...";
-	docker-machine create -d virtualbox swarm-$node;
+	docker-machine create -d virtualbox --virtualbox-memory "2048" swarm-$node;
 	docker-machine start swarm-$node;
 done
 
@@ -35,9 +35,6 @@ export worker_token=`docker-machine ssh swarm-1 "docker swarm join-token worker 
 
 echo "worker_token: $worker_token"
 
-# show members of swarm
-docker-machine ssh swarm-1 "docker node ls"
-
 # workers join swarm
 for node in $(seq 2 $workers);
 do
@@ -51,6 +48,8 @@ do
 done
 
 # show members of swarm
-#docker-machine ssh swarm-1 "docker node ls"
+docker-machine ssh swarm-1 "docker node ls"
+
+# show members of swarm
 eval $(docker-machine env swarm-1) \ 
 docker stack deploy -c docker-compose.yml ninjafxlabs

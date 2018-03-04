@@ -42,6 +42,13 @@ And open links below as ;
 - logging -> 192.168.99.100,101,102:5601 (you need set index as logstash-* by @timestamp AND product-* by @timestamp (after any perform request and It will create index as product automatically))
 
 - PLEASE SHOULD BE RUNNING STATE OF DOCKER-MACHINES
+- if you got error about machine driver as "Unable to query docker version ..." then run command as below ;
+
+```sh
+docker-machine regenerate-certs swarm-1
+docker-machine regenerate-certs swarm-2
+docker-machine regenerate-certs swarm-3
+```
 
 Note:
 
