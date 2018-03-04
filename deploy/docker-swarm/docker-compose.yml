@@ -91,11 +91,14 @@ services:
 
   elk:
     image: nshou/elasticsearch-kibana
-    container_name: elasticsearch
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
     ports:
       - 9200:9200
       - 5601:5601

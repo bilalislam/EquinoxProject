@@ -24,20 +24,24 @@ $ docker-compose down
 And open links below as ;
 - Api -> localhost:8003/swagger
 - connect to DB -> localhost:1433 | user:sa | password:testuser123!
-- logging -> localhost:5601 (you need set index as logstash-* and @timestamp)
+- logging -> localhost:5601 (you need set index as logstash-* by @timestamp AND product-* by @timestamp (after any perform request and It will create index as product automatically))
 
 ## How to setup via docker swarm:
 
 ```sh
 $ cd /deploy/docker-swarm
 $ sh setup.sh
+$ docker service scale {service_name}={replica_num}
 ```
 And open links below as ;
-- Api -> localhost:8003/swagger
-- connect to DB -> localhost:1433 | user:sa | password:testuser123!
-- visualizer -> localhost:8080
-- portainer (container dashboad UI) -> localhost:9000
+- Api -> 192.168.99.100,101,102:8003/swagger
+- connect to DB -> 192.168.99.100,101,102:1433 | user:sa | password:testuser123!
+- visualizer -> 192.168.99.100,101,102:8080
+- portainer (container dashboad UI) -> 192.168.99.100,101,102:9000
     - choose an user and password when entrance to portainer registeration page
+- logging -> 192.168.99.100,101,102:5601 (you need set index as logstash-* by @timestamp AND product-* by @timestamp (after any perform request and It will create index as product automatically))
+
+- PLEASE SHOULD BE RUNNING STATE OF DOCKER-MACHINES
 
 Note:
 

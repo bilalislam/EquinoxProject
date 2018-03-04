@@ -46,7 +46,7 @@ namespace Equinox.Infra.CrossCutting.IoC
             services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
             services.AddScoped<IProductService, ProductService>();
             services.AddSingleton<ElasticClient>(x =>
-                new ElasticClient(new ConnectionSettings(new Uri("http://localhost:9200"))
+                new ElasticClient(new ConnectionSettings(new Uri("http://elk:9200"))
                                         .DefaultIndex(SearchHelper.PRODUCT_INDEX)));
 
             // Domain - Events

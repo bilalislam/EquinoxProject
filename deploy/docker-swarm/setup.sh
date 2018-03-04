@@ -11,6 +11,7 @@ for node in $(seq 1 $managers);
 do
 	echo "======> Creating swarm-$node machine ...";
 	docker-machine create -d virtualbox swarm-$node;
+	docker-machine start swarm-$node;
 done
 
 # create worker machines
@@ -19,6 +20,7 @@ for node in $(seq 1 $workers);
 do
 	echo "======> Creating swarm-$node machine ...";
 	docker-machine create -d virtualbox swarm-$node;
+	docker-machine start swarm-$node;
 done
 
 # list all machines
