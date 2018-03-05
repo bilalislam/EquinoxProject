@@ -1,7 +1,7 @@
-@model Equinox.Application.ViewModels.CustomerViewModel
+@model Equinox.Application.ViewModels.ProductViewModel
 
 @{
-    ViewData["Title"] = "Edit Customer";
+    ViewData["Title"] = "Edit Product";
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -11,8 +11,6 @@
         <hr />
 
         <input type="hidden" asp-for="Id" />
-
-        @* Replacing classic Validation Summary to Custom ViewComponent as TagHelper *@
         <vc:summary />
 
         <div class="form-group">
@@ -20,22 +18,6 @@
             <div class="col-md-10">
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Email" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="BirthDate" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="BirthDate" class="form-control" />
-                <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
         </div>
 

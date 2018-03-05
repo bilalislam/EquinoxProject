@@ -1,7 +1,7 @@
-@model Equinox.Application.ViewModels.CustomerViewModel
+@model Equinox.Application.ViewModels.ProductViewModel
 
 @{
-    ViewData["Title"] = "Delete Customer";
+    ViewData["Title"] = "Delete Product";
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -14,22 +14,22 @@
         <hr />
         <dl class="dl-horizontal">
             <dt>
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt>
                 @Html.DisplayNameFor(model => model.Name)
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.Name)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.LastUpdateDate)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Email)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.BirthDate)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.BirthDate)
+                @Html.DisplayFor(model => model.LastUpdateDate)
             </dd>
         </dl>
 

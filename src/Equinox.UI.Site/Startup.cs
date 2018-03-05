@@ -14,6 +14,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace Equinox.UI.Site
 {
@@ -28,28 +29,13 @@ namespace Equinox.UI.Site
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(o =>
+            services.AddMvc(opts =>
                 {
-                    o.LoginPath = new PathString("/login");
-                    o.AccessDeniedPath = new PathString("/home/access-denied");
+                    opts.Filters.Add(new AllowAnonymousFilter());
                 });
 
-            services.AddMvc();
             services.AddAutoMapper();
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new ClaimRequirement("Customers", "Write")));
-                options.AddPolicy("CanRemoveCustomerData", policy => policy.Requirements.Add(new ClaimRequirement("Customers", "Remove")));
-            });
 
             // Adding MediatR for Domain Events and Notifications
             services.AddMediatR(typeof(Startup));
@@ -63,6 +49,7 @@ namespace Equinox.UI.Site
                                       ILoggerFactory loggerFactory,
                                       IHttpContextAccessor accessor)
         {
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -77,13 +64,12 @@ namespace Equinox.UI.Site
             }
 
             app.UseStaticFiles();
-            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=welcome}/{id?}");
+                    template: "{controller=product}/{action=list-all}/{id?}");
             });
         }
 

@@ -1,12 +1,72 @@
+@model IEnumerable<Equinox.Application.ViewModels.ProductViewModel>
 
 @{
     ViewData["Title"] = "Product Search";
-    Layout = "_Layout";    
 }
 
-<div id="example">
-    <div id="team-schedule">
-        <h1>Please , Search somethings by Product name </h1>
-    </div>
+<div>
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr />
 
+<div class="row">
+    <div class="col-md-12">
+        <div>
+            <div class="pull-left">
+                <a asp-action="Create" class="btn btn-primary">
+                    <span title="Register New Product" class="glyphicon glyphicon-plus-sign"></span>  New
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<div class="panel panel-default">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastUpdateDate)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastUpdateDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" title="Edit" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                        
+                    <a asp-action="Details" asp-route-id="@item.Id" title="Details" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </a>
+                        
+                    <a asp-action="Delete" asp-route-id="@item.Id" title="Delete" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>

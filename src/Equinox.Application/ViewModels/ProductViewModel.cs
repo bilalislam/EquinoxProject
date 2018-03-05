@@ -7,6 +7,7 @@ namespace Equinox.Application.ViewModels
     public class ProductViewModel
     {
         [Key]
+        [DisplayName("Id")]
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "The Name is Required")]
@@ -15,6 +16,7 @@ namespace Equinox.Application.ViewModels
         [DisplayName("Name")]
         public string Name { get; set; }
 
+        [DisplayName("LastUpdateDate")]
         public DateTime? LastUpdateDate { get; set; }
     }
 }

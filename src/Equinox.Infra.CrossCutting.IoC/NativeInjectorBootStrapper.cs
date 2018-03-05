@@ -49,7 +49,7 @@ namespace Equinox.Infra.CrossCutting.IoC
             services.AddScoped<IMediatorHandler, InMemoryBus>();
 
             // ASP.NET Authorization Polices
-            services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>(); ;
+            services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>(); 
 
             // Application
             services.AddSingleton(Mapper.Configuration);

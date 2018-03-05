@@ -39,7 +39,7 @@ namespace Equinox.Domain.CommandHandlers
         public void Handle(UpdateProductCommand message)
         {
             Validate(message);
-            var product = new Product(message.Id, message.Name, message.LastUpdateDate);
+            var product = new Product(message.Id, message.Name, DateTime.Now);
             _productRepository.Update(product);
             if (Commit())
                 RaiseEvent(new ProductUpdatedEvent(product.Id, product.Name, product.LastUpdateDate.Value));

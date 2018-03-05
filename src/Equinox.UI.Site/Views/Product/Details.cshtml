@@ -1,0 +1,35 @@
+@model Equinox.Application.ViewModels.ProductViewModel
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdateDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdateDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a> 
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>
