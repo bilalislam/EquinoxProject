@@ -7,6 +7,10 @@ Also you can run the Equinox Project in Visual Studio Code (Windows, Linux or Ma
 
 To know more about how to setup your enviroment visit the [Microsoft .NET Download Guide](https://www.microsoft.com/net/download)
 
+## How to setup via local:
+
+
+
 ## How to setup via docker compose:
 
 ```sh

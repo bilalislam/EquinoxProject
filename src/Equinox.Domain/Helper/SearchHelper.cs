@@ -5,6 +5,7 @@ using Nest;
 public static class SearchHelper
 {
     public const string PRODUCT_INDEX = "product";
+    public const string PRODUCT_ALIAS = "alias-product";
     public static void Initialize(ElasticClient elasticClient)
     {
         var settings = new IndexSettings { NumberOfReplicas = 0, NumberOfShards = 1 };
@@ -22,7 +23,7 @@ public static class SearchHelper
                         .SearchAnalyzer("standard")
                         .Analyzer("whitespace")))
                 .AutoMap()))
-                .Aliases(x => x.Alias("alias-product")));
+                .Aliases(x => x.Alias(PRODUCT_ALIAS)));
         }
     }
 }

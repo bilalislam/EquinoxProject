@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using AutoMapper;
 using Equinox.Application.Interfaces;
 using Equinox.Application.Services;
@@ -23,6 +24,7 @@ using Equinox.Infra.Data.UoW;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nest;
 
@@ -30,8 +32,16 @@ namespace Equinox.Infra.CrossCutting.IoC
 {
     public class NativeInjectorBootStrapper
     {
+        public static IConfiguration Configuration { get; set; }
+
+
         public static void RegisterServices(IServiceCollection services)
         {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            Configuration = builder.Build();
+
             // ASP.NET HttpContext dependency
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -43,11 +53,11 @@ namespace Equinox.Infra.CrossCutting.IoC
 
             // Application
             services.AddSingleton(Mapper.Configuration);
-            services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
+            services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(), sp.GetService));
             services.AddScoped<IProductService, ProductService>();
             services.AddSingleton<ElasticClient>(x =>
-                new ElasticClient(new ConnectionSettings(new Uri("http://elk:9200"))
-                                        .DefaultIndex(SearchHelper.PRODUCT_INDEX)));
+                new ElasticClient(new ConnectionSettings(new Uri(Configuration["ElasticSearchUrl"]))
+                                        .DefaultIndex(SearchHelper.PRODUCT_ALIAS)));
 
             // Domain - Events
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();

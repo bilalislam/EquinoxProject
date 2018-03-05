@@ -48,7 +48,7 @@ namespace Equinox.WebApi
                 .MinimumLevel.Debug()
                  .WriteTo.Elasticsearch().WriteTo.Elasticsearch(
                      new ElasticsearchSinkOptions(
-                         new Uri(Configuration.GetValue<string>("ElasticsearchUrl")))
+                         new Uri(Configuration["ElasticsearchUrl"]))
                      {
                          MinimumLogEventLevel = LogEventLevel.Verbose,
                          AutoRegisterTemplate = true

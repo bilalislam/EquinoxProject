@@ -5,16 +5,10 @@ services:
     image: ninjafx/eq-webapi:latest
     deploy:
       replicas: 1
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 50M
       restart_policy:
         condition: on-failure
     ports:
       - "8003:8003"
-    networks:
-      - webnet
     depends_on:
       - db
       - elk
@@ -23,16 +17,10 @@ services:
     image: ninjafx/eq-web:latest
     deploy:
       replicas: 1
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 50M
       restart_policy:
         condition: on-failure
     ports:
       - "8002:8002"
-    networks:
-      - webnet
     depends_on:
       - db
       - elk
@@ -41,10 +29,6 @@ services:
     image: ninjafx/eq-database:latest
     deploy:
       replicas: 1
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 50M
       restart_policy:
         condition: on-failure
     environment:
@@ -52,21 +36,9 @@ services:
       SA_PASSWORD: testuser123!
     ports:
       - "1433:1433"
-    networks:
-      - webnet
 
   elk:
     image: nshou/elasticsearch-kibana
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
     ports:
       - 9200:9200
       - 5601:5601
-    networks:
-      - webnet
-
-networks:
-  webnet:
-      driver: bridge
