@@ -3,7 +3,7 @@
 # Swarm mode using Docker Machine
 
 managers=1
-workers=3
+workers=2
 
 # create manager machines
 echo "======> Leave swarm mode  $managers manager machines ...";
