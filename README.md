@@ -83,7 +83,6 @@ $ sh kill.sh
 - ASP.NET Core 2.0 (with .NET Core)
  - ASP.NET MVC Core 
  - ASP.NET WebApi Core
- - ASP.NET Identity Core
 - Entity Framework Core 2.0
 - .NET Core Native DI
 - AutoMapper
