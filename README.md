@@ -62,6 +62,12 @@ docker-machine regenerate-certs swarm-2
 docker-machine regenerate-certs swarm-3
 ```
 
+For stop all containers
+```sh
+$ cd/deploy/docker-swarm
+$ sh kill.sh
+```
+
 Note:
 
 ## Technologies implemented:
