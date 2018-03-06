@@ -34,9 +34,9 @@ namespace Equinox.UI.Site.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("search")]
-        public IActionResult Index(string searchKey)
+        public IActionResult Index(ProductViewModel model)
         {
-            return View(_productService.Search(string.Empty, 1));
+            return View(_productService.Search(model.Name, 1));
         }
 
         [HttpGet]

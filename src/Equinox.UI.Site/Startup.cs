@@ -15,6 +15,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
+using System;
+using Serilog.Events;
 
 namespace Equinox.UI.Site
 {
@@ -25,6 +29,18 @@ namespace Equinox.UI.Site
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .MinimumLevel.Debug()
+                 .WriteTo.Elasticsearch().WriteTo.Elasticsearch(
+                     new ElasticsearchSinkOptions(
+                         new Uri(Configuration["ElasticsearchUrl"]))
+                     {
+                         MinimumLogEventLevel = LogEventLevel.Verbose,
+                         AutoRegisterTemplate = true
+                     })
+                .CreateLogger();
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -36,6 +52,7 @@ namespace Equinox.UI.Site
                 });
 
             services.AddAutoMapper();
+            services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
             // Adding MediatR for Domain Events and Notifications
             services.AddMediatR(typeof(Startup));

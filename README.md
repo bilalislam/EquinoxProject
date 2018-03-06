@@ -9,6 +9,14 @@ To know more about how to setup your enviroment visit the [Microsoft .NET Downlo
 
 ## How to setup via local:
 
+- open to the .vscode/launch.json and run web.dll or webapi.dll
+- you should be run these commands for dependencies of project
+- after that you should set localhost to the connectionstring and elasticsearchurl instead of db and elk
+
+```sh
+$ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=testuser123!' -p 1433:1433 -d ninjafx/eq-database:latest
+$ docker run -d -p 9200:9200 -p 5601:5601 nshou/elasticsearch-kibana 
+```
 
 
 ## How to setup via docker compose:
@@ -28,7 +36,7 @@ $ docker-compose down
 And open links below as ;
 - Api -> localhost:8003/swagger
 - connect to DB -> localhost:1433 | user:sa | password:testuser123!
-- logging -> localhost:5601 (you need set index as logstash-* by @timestamp AND product-* by @timestamp (after any perform request and It will create index as product automatically))
+- logging -> localhost:5601 (you need set index as logstash-* by @timestamp AND product by @timestamp (after any perform request and It will create index as product automatically))
 
 ## How to setup via docker swarm:
 
@@ -43,7 +51,7 @@ And open links below as ;
 - visualizer -> 192.168.99.100,101,102:8080
 - portainer (container dashboad UI) -> 192.168.99.100,101,102:9000
     - choose an user and password when entrance to portainer registeration page
-- logging -> 192.168.99.100,101,102:5601 (you need set index as logstash-* by @timestamp AND product-* by @timestamp (after any perform request and It will create index as product automatically))
+- logging -> 192.168.99.100,101,102:5601 (you need set index as logstash-* by @timestamp AND product by @timestamp (after any perform request and It will create index as product automatically))
 
 - PLEASE SHOULD BE RUNNING STATE OF DOCKER-MACHINES
 - if you got error about machine driver as "Unable to query docker version ..." then run command as below ;
