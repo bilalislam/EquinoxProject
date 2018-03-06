@@ -13,7 +13,7 @@ do
 	docker-machine ssh swarm-$node  "docker swarm leave -f";
 	docker-machine ssh swarm-$node  "docker stack rm ninjafxlabs";
 	docker-machine ssh swarm-$node  "docker network rm ninjafxlabs_webnet";
-    #docker-machine stop swarm-$node
+    docker-machine restart swarm-$node
 done
 
 # create worker machines
@@ -22,5 +22,5 @@ for node in $(seq 2 $workers);
 do
 	echo "======> stop swarm-$node machine ...";
 	docker-machine ssh swarm-$node  "docker swarm leave -f";
-    #docker-machine stop swarm-$node
+    docker-machine restart swarm-$node
 done

@@ -9,19 +9,10 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+      placement:
+        constraints: [node.role == manager]
     ports:
       - "9000:9000"
-
-  viz:
-    image: dockersamples/visualizer
-    volumes: 
-      - /var/run/docker.sock:/var/run/docker.sock
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-    ports:
-      - "8080:8080"
 
   webapi:
     image: ninjafx/eq-webapi:latest
@@ -33,7 +24,7 @@ services:
       - "8003:8003"
     depends_on:
       - db
-      - elasticsearch
+      - elk
 
   web:
     image: ninjafx/eq-web:latest
@@ -45,7 +36,7 @@ services:
       - "8002:8002"
     depends_on:
       - db
-      - elasticsearch
+      - elk
 
   db:
     image: ninjafx/eq-database:latest
@@ -53,6 +44,8 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+      placement:
+        constraints: [node.role == manager]
     environment:
       ACCEPT_EULA: 'Y'
       SA_PASSWORD: testuser123!

@@ -1,3 +1,5 @@
+## Case Studies  of Full  Scalable & Flexible  Architecture
+
 ## How to use:
 - You will need Visual Studio 2017 (preview 15.3) and the .NET Core SDK (released in August 14, 2017).
 - The latest SDK and tools can be downloaded from https://dot.net/core. 
@@ -12,6 +14,7 @@ To know more about how to setup your enviroment visit the [Microsoft .NET Downlo
 - open to the .vscode/launch.json and run web.dll or webapi.dll
 - you should be run these commands for dependencies of project
 - after that you should set localhost to the connectionstring and elasticsearchurl instead of db and elk
+- UI.Site/Program/ContentRoot(Directory.GetCurrentDirectory()) should be Directory.GetCurrentDirectory()+"/src/Equinox.UI.Site"
 
 ```sh
 $ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=testuser123!' -p 1433:1433 -d ninjafx/eq-database:latest
@@ -46,12 +49,13 @@ $ sh setup.sh
 $ docker service scale {service_name}={replica_num}
 ```
 And open links below as ;
-- Api -> 192.168.99.100,101,102:8003/swagger
-- connect to DB -> 192.168.99.100,101,102:1433 | user:sa | password:testuser123!
-- visualizer -> 192.168.99.100,101,102:8080
-- portainer (container dashboad UI) -> 192.168.99.100,101,102:9000
-    - choose an user and password when entrance to portainer registeration page
-- logging -> 192.168.99.100,101,102:5601 (you need set index as logstash-* by @timestamp AND product by @timestamp (after any perform request and It will create index as product automatically))
+- Api -> 192.168.99.100,101:8003/swagger
+- connect to DB -> 192.168.99.100,101:1433 | user:sa | password:testuser123!
+- portainer (container dashboad UI) -> 192.168.99.100,101:9000
+    - choose an user(admin) and password(12345678) when entrance to portainer registeration page 
+    - and select to local for connect
+    - and you can show all nodes from cluster if click go to cluster visualizer from Dashboard
+- logging -> 192.168.99.100,101:5601 (you need set index as logstash-* by @timestamp AND product by @timestamp (after any perform request and It will create index as product automatically))
 
 - PLEASE SHOULD BE RUNNING STATE OF DOCKER-MACHINES
 - if you got error about machine driver as "Unable to query docker version ..." then run command as below ;
@@ -67,8 +71,12 @@ For stop all containers
 $ cd/deploy/docker-swarm
 $ sh kill.sh
 ```
+## The Screenshots of System Infrastructure 
+<img src="./images/01.png" alt="Equinox Project"> 
+<img src="./images/02.png" alt="Equinox Project"> 
+<img src="./images/03.png" alt="Equinox Project"> 
+<img src="./images/04.png" alt="Equinox Project"> 
 
-Note:
 
 ## Technologies implemented:
 
