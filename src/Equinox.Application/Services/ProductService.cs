@@ -76,5 +76,21 @@ namespace Equinox.Application.Services
             GC.SuppressFinalize(this);
         }
 
+        public void LoadFromDb()
+        {
+            SearchHelper.Initialize(_elasticClient);
+            List<Product> products = new List<Product>();
+            products.AddRange(_productRepository.GetAll());
+            var request = new BulkDescriptor();
+            foreach (var entity in products){
+                request
+                    .Index<Product>(op => op
+                        .Id(entity.Id)
+                        .Index(SearchHelper.PRODUCT_INDEX)
+                        .Document(entity));
+            }
+
+            _elasticClient.Bulk(request);
+        }
     }
 }

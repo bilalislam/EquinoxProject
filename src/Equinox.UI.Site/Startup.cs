@@ -45,7 +45,8 @@ namespace Equinox.UI.Site
 
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddSession();
+            
             services.AddMvc(opts =>
                 {
                     opts.Filters.Add(new AllowAnonymousFilter());
@@ -80,6 +81,7 @@ namespace Equinox.UI.Site
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseSession();
             app.UseStaticFiles();
 
             app.UseMvc(routes =>

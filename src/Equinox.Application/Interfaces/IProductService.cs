@@ -11,5 +11,7 @@ namespace Equinox.Application.Interfaces
         ProductViewModel GetById(Guid id);
         void Update(ProductViewModel model);
         void Remove(Guid id);
+
+        void LoadFromDb();
     }
 }

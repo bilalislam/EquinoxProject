@@ -5,6 +5,7 @@ using Equinox.Application.ViewModels;
 using Equinox.Domain.Core.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Equinox.UI.Site.Controllers
@@ -14,11 +15,14 @@ namespace Equinox.UI.Site.Controllers
     public class ProductController : BaseController
     {
         private readonly IProductService _productService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public ProductController(INotificationHandler<DomainNotification> notifications,
-            IProductService productService) : base(notifications)
+            IProductService productService, IHttpContextAccessor httpContextAccessor) : base(notifications)
         {
             _productService = productService;
+            _httpContextAccessor = httpContextAccessor;
+            Initialize();
         }
 
 
@@ -65,13 +69,15 @@ namespace Equinox.UI.Site.Controllers
         [Route("edit-product/{id:guid}")]
         public IActionResult Edit(Guid? id)
         {
-            if (id == null){
+            if (id == null)
+            {
                 return NotFound();
             }
 
             var model = _productService.GetById(id.Value);
 
-            if (model == null){
+            if (model == null)
+            {
                 return NotFound();
             }
 
@@ -96,13 +102,15 @@ namespace Equinox.UI.Site.Controllers
         [Route("remove-product/{id:guid}")]
         public IActionResult Delete(Guid? id)
         {
-            if (id == null){
+            if (id == null)
+            {
                 return NotFound();
             }
 
             var model = _productService.GetById(id.Value);
 
-            if (model == null){
+            if (model == null)
+            {
                 return NotFound();
             }
 
@@ -139,6 +147,15 @@ namespace Equinox.UI.Site.Controllers
             }
 
             return View(model);
+        }
+
+        private void Initialize()
+        {
+            if (_httpContextAccessor.HttpContext.Session.GetInt32("count") == null)
+            {
+                _productService.LoadFromDb();
+                _httpContextAccessor.HttpContext.Session.SetInt32("count", 0);
+            }
         }
     }
 }

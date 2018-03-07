@@ -57,7 +57,7 @@ namespace Equinox.Infra.CrossCutting.IoC
             services.AddScoped<IProductService, ProductService>();
             services.AddSingleton<ElasticClient>(x =>
                 new ElasticClient(new ConnectionSettings(new Uri(Configuration["ElasticSearchUrl"]))
-                                        .DefaultIndex(SearchHelper.PRODUCT_ALIAS)));
+                                        .DefaultIndex(SearchHelper.PRODUCT_INDEX)));
 
             // Domain - Events
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
