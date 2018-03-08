@@ -71,6 +71,9 @@ For stop all containers
 $ cd/deploy/docker-swarm
 $ sh kill.sh
 ```
+## The Home Page of App 
+<img src="./images/05.png" alt="Equinox Project"> 
+
 ## The Screenshots of System Infrastructure 
 <img src="./images/01.png" alt="Equinox Project"> 
 <img src="./images/02.png" alt="Equinox Project"> 
