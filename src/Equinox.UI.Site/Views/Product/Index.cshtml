@@ -1,4 +1,4 @@
-@model IEnumerable<Equinox.Application.ViewModels.ProductViewModel>
+@model ProductListViewModel
 
 @{
     ViewData["Title"] = "Product Search";
@@ -23,62 +23,65 @@
         <form asp-action="search" method="post">
         <div class="form-actions no-color">
             <p>
-                Find by name: <input type="text" name="Name" />
-                <input type="submit" value="Search" class="btn btn-default" /> 
+                Find by name: <input type="text" name="Name" value="@Model.SearchKey" />    
+                <input id="searchBtn" type="submit" value="Search" class="btn btn-default" /> 
             </p>
         </div>
+        <br/>
+        <div class="panel panel-default">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            LastUpdateDate
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastUpdateDate)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" title="Edit" class="btn btn-warning">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                                
+                            <a asp-action="Details" asp-route-id="@item.Id" title="Details" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </a>
+                                
+                            <a asp-action="Delete" asp-route-id="@item.Id" title="Delete" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+    </div>
+            <ul class="pagination">
+                @for (int i=1;i<=@Model.TotalCount;i++ ){
+                    <li><a href="/product/list-all?searchKey=@Model.SearchKey&page=@i">@i</a></li>
+                }
+                
+            </ul>
     </form>
     </div>
 </div>
 
-
-<br/>
-
-<div class="panel panel-default">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastUpdateDate)
-            </th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastUpdateDate)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" title="Edit" class="btn btn-warning">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                        
-                    <a asp-action="Details" asp-route-id="@item.Id" title="Details" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </a>
-                        
-                    <a asp-action="Delete" asp-route-id="@item.Id" title="Delete" class="btn btn-danger">
-                        <span class="glyphicon glyphicon-trash"></span>
-                    </a>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-</div>
 

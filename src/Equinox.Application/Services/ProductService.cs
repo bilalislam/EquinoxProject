@@ -36,17 +36,22 @@ namespace Equinox.Application.Services
             _elasticClient = elasticClient;
         }
 
-        public IEnumerable<ProductViewModel> Search(string searchKey, int page)
+        public SearchResponse Search(string searchKey, int page = 0)
         {
-            var result = _elasticClient.Search<Product>(x => x
-                                .Query(q => q.QueryString(m => m.Query($"{searchKey}*")
+            var query = _elasticClient.Search<Product>(x => x
+                                .Query(q => q.QueryString(m => m.Query($"{searchKey ?? string.Empty}*")
                                 .Fields(f => f.Field(fl => fl.Name))))
-                                .From(page - 1)
+                                .From(((page == 0 ? 1 : page) - 1) * 10)
                                 .Size(10));
 
-            return _mapper.Map<IEnumerable<ProductViewModel>>(result.Documents);
-        }
+            var result = new SearchResponse()
+            {
+                Documents = _mapper.Map<IEnumerable<ProductViewModel>>(query.Documents),
+                Total = query.Total
+            };
 
+            return result;
+        }
 
         public ProductViewModel GetById(Guid id)
         {
@@ -82,7 +87,8 @@ namespace Equinox.Application.Services
             List<Product> products = new List<Product>();
             products.AddRange(_productRepository.GetAll());
             var request = new BulkDescriptor();
-            foreach (var entity in products){
+            foreach (var entity in products)
+            {
                 request
                     .Index<Product>(op => op
                         .Id(entity.Id)

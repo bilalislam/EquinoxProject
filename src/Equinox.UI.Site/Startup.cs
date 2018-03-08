@@ -46,7 +46,7 @@ namespace Equinox.UI.Site
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSession();
-            
+
             services.AddMvc(opts =>
                 {
                     opts.Filters.Add(new AllowAnonymousFilter());
@@ -89,6 +89,10 @@ namespace Equinox.UI.Site
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=product}/{action=list-all}/{id?}");
+
+                routes.MapRoute(
+                    name: "product-search",
+                    template: "{controller=product}/{action=list-all}/{searchKey?}/{page?}");
             });
         }
 

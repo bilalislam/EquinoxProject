@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using Equinox.Application.Interfaces;
 using Equinox.Application.ViewModels;
@@ -28,11 +30,11 @@ namespace Equinox.UI.Site.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("list-all")]
         [Route("/")]
-        public IActionResult Index()
+        [Route("list-all")]
+        public IActionResult Index([FromQuery]string searchKey, [FromQuery]int page)
         {
-            return View(_productService.Search(string.Empty, 1));
+            return View(ReturnModel(searchKey, page));
         }
 
         [HttpPost]
@@ -40,7 +42,7 @@ namespace Equinox.UI.Site.Controllers
         [Route("search")]
         public IActionResult Index(ProductViewModel model)
         {
-            return View(_productService.Search(model.Name, 1));
+            return View(ReturnModel(model.Name));
         }
 
         [HttpGet]
@@ -156,6 +158,19 @@ namespace Equinox.UI.Site.Controllers
                 _productService.LoadFromDb();
                 _httpContextAccessor.HttpContext.Session.SetInt32("count", 0);
             }
+        }
+
+        private ProductListViewModel ReturnModel(string searchKey, int page = 0)
+        {
+            SearchResponse result = _productService.Search(searchKey, page);
+            ProductListViewModel model = new ProductListViewModel()
+            {
+                Products = result.Documents,
+                TotalCount = Convert.ToInt32(Math.Ceiling(result.Total / 10.0)),
+                SearchKey = searchKey
+            };
+
+            return model;
         }
     }
 }
